@@ -52,6 +52,26 @@ export function Accounts() {
             </div>
           </div>
 
+          {/* <div className="flex flex-col flex-1">
+            <span className="text-white tracking-[-1px] text-lg font-bold py-4">
+              Mais ações
+            </span>
+
+            <div className="w-full justify-between grid grid-cols-4 gap-2">
+              <div className="flex border border-white rounded-lg w-full h-full bg-transparent items-center justify-center">
+                <button className="text-white">
+                  Extrato
+                </button>
+              </div>
+
+              <div className="flex border border-white rounded-lg w-full h-full bg-transparent items-center justify-center text-center">
+                <button className="text-white p-1">
+                  Análise do mês
+                </button>
+              </div>
+            </div>
+          </div> */}
+
           <div className="flex-1 flex flex-col justify-end mt-10 md:mt-0">
             {accounts.length === 0 && (
               <>
