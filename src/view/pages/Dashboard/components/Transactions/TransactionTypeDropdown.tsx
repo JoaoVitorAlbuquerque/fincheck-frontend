@@ -5,8 +5,8 @@ import { IncomeIcon } from "../../../../components/icons/IncomeIcon";
 import { ExpensesIcon } from "../../../../components/icons/ExpensesIcon";
 
 interface TransactionTypeDropdownProps {
-  onSelect(type: 'INCOME' | 'EXPENSE' | undefined): void;
-  selectedType: 'INCOME' | 'EXPENSE' | undefined;
+  onSelect(type: 'INCOME' | 'EXPENSE' | 'TRANSFER' | undefined): void;
+  selectedType: 'INCOME' | 'EXPENSE' | 'TRANSFER' | undefined;
 }
 
 export function TransactionTypeDropdown({ onSelect, selectedType }: TransactionTypeDropdownProps) {
