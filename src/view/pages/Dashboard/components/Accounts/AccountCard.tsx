@@ -9,7 +9,7 @@ interface AccountCardProps {
 }
 
 export function AccountCard({ data }: AccountCardProps) {
-  const { color, currentBalance, name, type } = data;
+  const { color, currentBalance, name, type, bankAccountKey } = data;
   const { areValuesVisible, openEditAccountModal } = useDashboard();
 
   return (
@@ -19,12 +19,22 @@ export function AccountCard({ data }: AccountCardProps) {
       role="button"
       onClick={() => openEditAccountModal(data)}
     >
-      <div>
-        <BankAccountTypeIcon type={type} />
+      <div className="flex justify-between">
+        <div>
+          <BankAccountTypeIcon type={type} />
 
-        <span className="text-gray-800 font-medium tracking-[-0.5px] mt-4 block">
-          {name}
-        </span>
+          <span className="text-gray-800 font-medium tracking-[-0.5px] mt-4 block">
+            {name}
+          </span>
+        </div>
+
+        <div>
+          <span className="text-gray-800 font-medium">Chave de conta: </span>
+
+          <span className="text-base font-bold text-gray-800 p-1 bg-gray-100 rounded-md border border-teal-600">
+            {bankAccountKey}
+          </span>
+        </div>
       </div>
 
       <div>
