@@ -59,7 +59,7 @@ export function NewContactTransactionModal() {
               <Input
                 type="text"
                 hidden
-                error={errors.name?.message}
+                // error={errors.name?.message}
                 // placeholder='Escreva o título da transação'
                 {...register('toBankAccountId')}
                 value={account.id}
@@ -99,82 +99,84 @@ export function NewContactTransactionModal() {
             </div>
           ))}
 
-          {bankAccount.length !== 0 && (
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <span>Valor da Transação</span>
+          <div className="max-h-48 overflow-y-scroll">
+            {bankAccount.length !== 0 && (
+              <div className="space-y-4">
+                <div className="space-y-1">
+                  <span>Valor da Transação</span>
 
-                <div className="flex items-center gap-2 border border-gray-600 rounded-md">
-                  <span className="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
+                  <div className="flex items-center gap-2 border border-gray-600 rounded-md">
+                    <span className="text-gray-600 tracking-[-0.5px] text-lg">R$</span>
+
+                    <Controller
+                      name="amount"
+                      control={control}
+                      defaultValue="0"
+                      render={({ field: { onChange, value } }) => (
+                        <InputCurrency
+                          error={errors.amount?.message}
+                          onChange={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1">
+                  <span>Título</span>
+
+                  <Input
+                    type="text"
+                    error={errors.name?.message}
+                    placeholder='Escreva o título da transação'
+                    {...register('name')}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <span>Conta</span>
 
                   <Controller
-                    name="amount"
                     control={control}
-                    defaultValue="0"
+                    name="fromBankAccountId"
+                    defaultValue=""
                     render={({ field: { onChange, value } }) => (
-                      <InputCurrency
-                        error={errors.amount?.message}
+                      <Select
+                        placeholder="Transferir com"
                         onChange={onChange}
                         value={value}
+                        error={errors.fromBankAccountId?.message}
+                        options={accounts.map(account => ({
+                          value: account.id,
+                          label: account.name,
+                        }))}
+                      />
+                    )}
+                  />
+
+                  <Controller
+                    control={control}
+                    name="date"
+                    defaultValue={new Date()}
+                    render={({ field: { value, onChange } }) => (
+                      <DatePickerInput
+                        error={errors.date?.message}
+                        value={value}
+                        onChange={onChange}
                       />
                     )}
                   />
                 </div>
+
+                {/* <div className="flex flex-col justify-center">
+                  <span>saldo da conta: </span>
+
+                  <span>R$100.000,00</span>
+                </div> */}
               </div>
-
-              <div className="space-y-1">
-                <span>Título</span>
-
-                <Input
-                  type="text"
-                  error={errors.name?.message}
-                  placeholder='Escreva o título da transação'
-                  {...register('name')}
-                />
-              </div>
-
-              <div className="space-y-1">
-                <span>Conta</span>
-
-                <Controller
-                  control={control}
-                  name="fromBankAccountId"
-                  defaultValue=""
-                  render={({ field: { onChange, value } }) => (
-                    <Select
-                      placeholder="Transferir com"
-                      onChange={onChange}
-                      value={value}
-                      error={errors.fromBankAccountId?.message}
-                      options={accounts.map(account => ({
-                        value: account.id,
-                        label: account.name,
-                      }))}
-                    />
-                  )}
-                />
-
-                <Controller
-                  control={control}
-                  name="date"
-                  defaultValue={new Date()}
-                  render={({ field: { value, onChange } }) => (
-                    <DatePickerInput
-                      error={errors.date?.message}
-                      value={value}
-                      onChange={onChange}
-                    />
-                  )}
-                />
-              </div>
-
-              {/* <div className="flex flex-col justify-center">
-                <span>saldo da conta: </span>
-
-                <span>R$100.000,00</span>
-              </div> */}
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {bankAccount.length !== 0 && (

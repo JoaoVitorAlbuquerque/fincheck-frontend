@@ -34,7 +34,7 @@ export function useNewContactTransactionModalController() {
     bankAccount,
     isLoading,
     refetchTransactions,
-  } = useBankAccountByKey({ bankAccountKey: selectedBankAccountKey });
+  } = useBankAccountByKey({ bankAccountKey: selectedBankAccountKey?.toUpperCase() });
 
   const {
     register,
