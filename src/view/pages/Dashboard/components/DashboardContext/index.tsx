@@ -9,6 +9,7 @@ interface DashboardContextValue {
   isEditAccountModalOpen: boolean;
   accountBeingEdited: null | BankAccount;
   isNewContactTransactionModalOpen: boolean;
+  isConfirmContactTransactionModalOpen: boolean;
   toggleValuesVisibility(): void;
   openNewAccountModal(): void;
   closeNewAccountModal(): void;
@@ -18,6 +19,8 @@ interface DashboardContextValue {
   closeEditAccountModal(): void;
   openNewContactTransactionModal(): void;
   closeNewContactTransactionModal(): void;
+  openConfirmContactTransactionModal(): void;
+  closeConfirmContactTransactionModal(): void;
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue);
@@ -27,6 +30,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
   const [isNewContactTransactionModalOpen, setIsNewContactTransactionModalOpen] = useState(false);
+  const [isConfirmContactTransactionModalOpen, setConfirmContactTransactionModalOpen] = useState(false);
   const [newTransactionType, setNewTransactionType] = useState<'INCOME' | 'EXPENSE' | null>(null);
   const [isEditAccountModalOpen, setIsEditAccountModalOpen] = useState(false);
   const [accountBeingEdited, setAccountBeingEdited] = useState<null | BankAccount>(null);
@@ -61,6 +65,14 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     setIsNewContactTransactionModalOpen(false);
   }, []);
 
+  const openConfirmContactTransactionModal = useCallback(() => {
+    setConfirmContactTransactionModalOpen(true);
+  }, []);
+
+  const closeConfirmContactTransactionModal = useCallback(() => {
+    setConfirmContactTransactionModalOpen(false);
+  }, []);
+
   const openEditAccountModal = useCallback((bankAccount: BankAccount) => {
     setIsEditAccountModalOpen(true);
     setAccountBeingEdited(bankAccount);
@@ -90,6 +102,9 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         isNewContactTransactionModalOpen,
         openNewContactTransactionModal,
         closeNewContactTransactionModal,
+        isConfirmContactTransactionModalOpen,
+        openConfirmContactTransactionModal,
+        closeConfirmContactTransactionModal,
       }}
     >
       {children}

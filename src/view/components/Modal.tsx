@@ -9,9 +9,10 @@ interface ModalProps {
   title: string;
   rightAction?: React.ReactNode;
   onClose?(): void;
+  hidden?: boolean;
 }
 
-export function Modal({ open, title, children, rightAction, onClose }: ModalProps) {
+export function Modal({ open, title, children, rightAction, onClose, hidden }: ModalProps) {
   return (
     <RdxDialog.Root open={open} onOpenChange={onClose}>
       <RdxDialog.Portal>
@@ -20,6 +21,7 @@ export function Modal({ open, title, children, rightAction, onClose }: ModalProp
             'fixed inset-0 bg-black/80 backdrop-blur-sm z-50',
             'data-[state=open]:animate-overlay-show'
           )}
+          hidden={hidden}
         />
 
         <RdxDialog.Content
