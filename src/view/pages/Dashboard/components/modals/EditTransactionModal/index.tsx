@@ -31,6 +31,8 @@ export function EditTransactionModal({ transaction, onClose, open }: EditTransac
     handleDeleteTransaction,
     handleOpenDeleteModal,
     handleCloseDeleteModal,
+    isLoadingFile,
+    fileUrl,
   } = useEditTransactionModalController(transaction, onClose);
 
   const isExpense = transaction?.type === 'EXPENSE';
@@ -149,9 +151,19 @@ export function EditTransactionModal({ transaction, onClose, open }: EditTransac
           />
         </div>
 
-        <Button type="submit" className="w-full mt-6" isLoading={isLoading} disabled={transaction?.isTransfer}>
-          Salvar
-        </Button>
+        {transaction?.isTransfer && transaction.type === "EXPENSE" && (
+          <div className="mt-4 cursor-pointer flex items-center justify-center bg-teal-900 border border-teal-900 rounded-md p-2 text-white hover:bg-teal-600 transition-colors">
+            <a href={fileUrl} target="_blank" rel="noopener noreferrer" aria-disabled={isLoadingFile}>
+              Baixar comprovante
+            </a>
+          </div>
+        )}
+
+        {!transaction?.isTransfer && (
+          <Button type="submit" className="w-full mt-6" isLoading={isLoading} disabled={transaction?.isTransfer}>
+            Salvar
+          </Button>
+        )}
       </form>
     </Modal>
   );

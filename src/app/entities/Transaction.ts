@@ -7,6 +7,7 @@ export interface Transaction {
   date: string;
   type: 'INCOME' | 'EXPENSE' | 'TRANSFER';
   isTransfer?: boolean;
+  pdfUrl?: string;
   category?: {
     id: string;
     name: string;

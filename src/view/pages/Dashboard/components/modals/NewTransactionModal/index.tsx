@@ -7,6 +7,8 @@ import { InputCurrency } from "../../../../../components/InputCurrency";
 import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
 import { useNewTransactionModalController } from "./useNewTransactionModalController";
+import { cn } from "../../../../../../app/utils/cn";
+import { TrashIcon } from "../../../../../components/icons/TrashIcon";
 
 export function NewTransactionModal() {
   const {
@@ -20,6 +22,11 @@ export function NewTransactionModal() {
     accounts,
     categories,
     isLoading,
+    files,
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    handleRemoveFile,
   } = useNewTransactionModalController();
 
   const isExpense = newTransactionType === 'EXPENSE';
@@ -109,6 +116,57 @@ export function NewTransactionModal() {
               />
             )}
           />
+
+          <div className="w-full" hidden>
+            {files.length === 0 && (
+              <>
+                <span>Deseja anexar algum comprovante:</span>
+
+                <div
+                  {...getRootProps()}
+                  className={cn(
+                    'border p-12 w-full rounded-md border-dashed transition-colors flex items-center justify-center cursor-pointer',
+                    isDragActive && 'bg-gray-100',
+                  )}
+                >
+                  <input {...getInputProps()} />
+
+                  {/* <PackadOpenIcon clasName="size-10 strke-1 mb-2" /> */}
+
+                  <div className="space-y-1 felx flex-col gap-1">
+                    <span>Solte seus arquivos aqui</span>
+                    <small className="block">Apenas arquivos .PDF de até 1MB são aceitos</small>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {files.length > 0 && (
+              <div className="mt-1">
+                <span className="font-medium text-base tracking-tight mb-4">
+                  Arquivos selecionados
+                </span>
+
+                {files.map((file, index) => (
+                  <div
+                    key={file.name}
+                    className="border p-1 rounded-md flex items-center justify-between"
+                  >
+                    <span className="text-sm">
+                      {file.name}
+                    </span>
+
+                    <Button
+                      variant="danger"
+                      onClick={() => handleRemoveFile(index)}
+                    >
+                      <TrashIcon className="size-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <Button type="submit" className="w-full mt-6" isLoading={isLoading}>

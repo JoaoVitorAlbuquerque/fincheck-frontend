@@ -1,6 +1,6 @@
 import { z } from "zod";
 import toast from "react-hot-toast";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -43,6 +43,7 @@ export function useEditTransactionModalController(
       date: transaction ? new Date(transaction.date) : new Date(),
     },
   });
+  const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
 
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
@@ -56,6 +57,11 @@ export function useEditTransactionModalController(
     isLoading: isLoadingDelete,
     mutateAsync: removeTransaction,
   } = useMutation(transactionsService.remove);
+
+  const {
+    isLoading: isLoadingFile,
+    mutateAsync: getPresignedUrl,
+  } = useMutation(transactionsService.getPresignedUrl);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -111,6 +117,24 @@ export function useEditTransactionModalController(
     }
   }
 
+  useEffect(() => {
+    if (!transaction?.pdfUrl) return;
+
+    const fetchUrl = async () => {
+      try {
+        const url = await getPresignedUrl({ fileName: transaction.pdfUrl });
+        console.log('Dentro do useEffect', url);
+        setFileUrl(url);
+      } catch (error) {
+        console.error("Erro ao buscar URL assinada", error);
+      }
+    };
+
+    fetchUrl();
+  }, [transaction?.pdfUrl, getPresignedUrl]);
+  console.log('EditController', transaction?.pdfUrl);
+  console.log('EditController presigned url', fileUrl);
+
   function handleOpenDeleteModal() {
     setIsDeleteModalOpen(true);
   }
@@ -131,5 +155,7 @@ export function useEditTransactionModalController(
     handleDeleteTransaction,
     handleOpenDeleteModal,
     handleCloseDeleteModal,
+    isLoadingFile,
+    fileUrl,
   };
 }
