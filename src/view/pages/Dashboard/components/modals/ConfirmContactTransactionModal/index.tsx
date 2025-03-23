@@ -1,4 +1,4 @@
-import { formatCurrency } from "../../../../../../app/utils/formatCurrency";
+// import { formatCurrency } from "../../../../../../app/utils/formatCurrency";
 import { Button } from "../../../../../components/Button";
 import { Modal } from "../../../../../components/Modal";
 import { useConfirmContactTransactionModal } from "./useConfirmContactTransactionModal";
@@ -85,7 +85,7 @@ export function ConfirmContactTransactionModal({
           <div className="space-y-2 p-2 border border-gray-600 rounded-md">
             <div>
               <span className="text-sm font-bold text-gray-700">Valor da Transação: </span>
-              <span className="text-base font-bold text-gray-800">{formatCurrency(amount)}</span>
+              <span className="text-base font-bold text-gray-800">R$ {amount}</span>
             </div>
 
             <div>

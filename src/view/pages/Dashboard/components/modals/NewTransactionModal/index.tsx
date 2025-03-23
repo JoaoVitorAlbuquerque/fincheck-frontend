@@ -8,7 +8,7 @@ import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
 import { useNewTransactionModalController } from "./useNewTransactionModalController";
 import { cn } from "../../../../../../app/utils/cn";
-import { TrashIcon } from "../../../../../components/icons/TrashIcon";
+import { CrossCircledIcon } from "@radix-ui/react-icons";
 
 export function NewTransactionModal() {
   const {
@@ -160,7 +160,7 @@ export function NewTransactionModal() {
                       variant="danger"
                       onClick={() => handleRemoveFile(index)}
                     >
-                      <TrashIcon className="size-4" />
+                      <CrossCircledIcon className="h-[20px] w-[20px]" />
                     </Button>
                   </div>
                 ))}

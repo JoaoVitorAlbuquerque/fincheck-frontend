@@ -45,7 +45,7 @@ export function useNewTransactionModalController() {
       file,
     })));
 
-    const response = await Promise.allSettled(urls.map(({ file, url }) => (
+    const response = await Promise.allSettled(urls.map(({ url, file }) => (
       uploadFile(url, file)
     )));
 

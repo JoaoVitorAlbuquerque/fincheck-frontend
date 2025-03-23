@@ -7,5 +7,4 @@ export function currencyStringToNumber(value: string | number) {
   return Number(sanitizedString);
 }
 
-
 // const sanitizedString = value.replace(/\./g, '').replace(',', '.'); -> usar esta quando consertar o "initialBalance"
